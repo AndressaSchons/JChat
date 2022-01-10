@@ -12,11 +12,21 @@
 
 <script>
 export default {
-    name: "Login"
+    name: "Login",
+    methods:{
+        /*const usersLogins = [];
+        function valid(user){
+            if (user != usersLogins){
+                usersLogins[i] = user;
+                return true;
+            }
+        }*/
 }
+}
+
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
 body
     font-family: 'Montserrat', sans-serif
     background-image: url(https://i.ytimg.com/vi/B-ZdaavVKAc/maxresdefault.jpg)
@@ -58,5 +68,5 @@ body
     height: 30px
     background: transparent
     border-radius: 5px
-
+    border: none
 </style>

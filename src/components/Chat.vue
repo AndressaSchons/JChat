@@ -99,33 +99,32 @@ header
     font-size: 20px
     text-align: center
     img
-    width: 20px
+        width: 20px
 
 .containerTela
     width: 100%
     height: 100%
 
-
-
 .headerConversa
     background-color: #284670
     color: white
+    img
+        width: 50px
+        border-radius: 15px
+        margin: 10px 10px 0 10px
+    img, h3
+        display: inline-block
 
- img
-    width: 50px
-    border-radius: 15px
-    margin: 10px 10px 0 10px
- img, h3
-    display: inline-block
 
+.containerTela
+    img
+        width: 50px
+        border-radius: 10px
 
-.containerTela img
-    width: 50px
-    border-radius: 10px
-
-.onlines ul
-    list-style-type: none
-    padding: 0
+.onlines
+    ul
+        list-style-type: none
+        padding: 0
 
 .pessoaOnline
     color: white
@@ -133,9 +132,10 @@ header
     padding: 10px
     display: block
 
-.pessoaOnline img
-    border: 3px solid green
-    border-radius: 30px
+.pessoaOnline
+    img
+        border: 3px solid green
+        border-radius: 30px
 
 .column
     display: grid

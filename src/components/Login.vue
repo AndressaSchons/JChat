@@ -21,6 +21,13 @@ export default {
                 return true;
             }
         }*/
+      login(){
+        if(this.name){
+          this.$emit({name: 'Chat', params:{name:this.name}})
+        } else {
+          this.errorText = "Insira o login"
+        }
+      }
 }
 }
 

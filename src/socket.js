@@ -19,10 +19,22 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
-});
 
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
+    io.on('connection', (socket) => {
+        socket.on('chat message', (msg) => {
+            console.log('message: ' + msg);
+        });
     });
+
+    //bem vindo
+    socket.emit('menssage', 'Seja bem vindo');
+
+    socket.broadcast.emit('menssage', 'Um usuário entrou no chat');
+
+    socket.on('disconnect', () => {
+        io.emit('message', 'Um usuário saiu do chat')
+    })
+        socket.on('chatMessage', (msg => {
+            io.emit('message', msg)
+        }))
 });

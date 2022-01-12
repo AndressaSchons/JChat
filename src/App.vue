@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <Login />
+    <Chat />
   </div>
 </template>
 
 <script>
-import Login from './components/Login.vue'
-import Chat from './components/Chat.vue'
+//import Pagina from './components/Pagina.vue'
+import Chat from "./components/Chat.vue";
 
 export default {
   name: 'App',
   components: {
-      Login,
-      Chat
+    Chat,
+
   }
 }
 </script>
@@ -24,6 +24,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

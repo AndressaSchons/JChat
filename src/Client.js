@@ -1,4 +1,4 @@
-const socket = io();
+/*const socket = io();
 
 socket.on('message', message => {
     console.log(message);
@@ -15,4 +15,5 @@ chatForm.addEventListener('submit', (e) => {
 
     //envia mensagem pro chat
     socket.emit('mensagem', msg);
-})
+    socket.emit('mensagem', console.log(msg));
+})*/

@@ -36,12 +36,11 @@
                         </li>
                     </ul>
 
-                    <div class="envioMensagem">
-                        <form @submit.prevent = "sendMessage">
-                            <input type="text" id="msg" name="msg" class="envioMsg" v-model:value="msg" />
-                            <button class="button send">Enviar</button>
-                        </form>
-                    </div>
+
+                    <form @submit.prevent = "sendMessage" class="envioMensagem">
+                        <input type="text" id="msg" name="msg" class="envioMsg" v-model:value="msg" />
+                        <button class="button send">Enviar</button>
+                    </form>
                 </div>
 
                 <div class="column" style="max-width: 100px; height: 100%; background-color: white">
@@ -216,6 +215,7 @@ header
 .containerChat
     background-color: pink
     position: relative
+    margin: 0
 
 .headerConversa
     background-color: #284670
@@ -237,9 +237,10 @@ header
 
 .envioMensagem
     width: 100%
-    height: 10px
+    background-color: black
     position: absolute
-    margin-top: 500px
+    bottom: 0
+    margin: 0
 
 .mensagem
     text-align: left

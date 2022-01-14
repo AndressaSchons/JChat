@@ -7,73 +7,46 @@
             </nav>
         </header>
 
-        <div class="form" v-if="show = false" >
-            <form action="">
+        <div class="form" v-if="show" >
+            <form action="" @submit.prevent="loginFlag">
                 <label for="user">USUÁRIO:</label>
                 <input type="text" id="user" class="login" placeholder="Usuário" v-model="userName">
-                <br />
-                <button type="button" v-on:click="loginFlag" >Entrar!</button>
-                <input type="button" v-on:click="loginFlag" id="btnSubmit">Entrar
+                <button type="submit" class="loginButton">Login</button>
             </form>
         </div>
 
-        <section id="app" class="containerTela" v-else-if="show = true">
+        <section id="app" class="containerTela" v-else-if="!show">
 
             <div class="columns" style="height: 100%">
                 <div class="column" style="max-width: 90px">
                     <img src="https://caocidadao.com.br/wp-content/uploads/2019/09/user.png" alt="">
                     <h5 class="nMensg">2</h5>
-                    <!--Inserir css com o numero de mensagens-->
                 </div>
 
-                <div class="column chat">
-                    <div class="containerChat" style="max-width: 100%">
-                        <div class="headerConversa">
-                          <img src="https://i2.wp.com/www.portalzendaat.com.br/wp-content/uploads/2016/06/pertenecer-a-un-grupo-comunidad-1.jpg">
-                          <h3 class="title is-4 nomeConversa">Marias Fifi</h3>
+                <div class="column chat containerChat" style="max-width: 100%">
+                    <div class="headerConversa">
+                        <img src="https://i2.wp.com/www.portalzendaat.com.br/wp-content/uploads/2016/06/pertenecer-a-un-grupo-comunidad-1.jpg">
+                        <h3 class="title is-4 nomeConversa">Grupo 1</h3>
                           <!-- burger menu: sair da sala/definir prioridade-->
-                        </div>
-                        <div class="msg">
-                          <h4 class="userName"><strong>Diogo</strong></h4>
-                          <h6 class="mensagem">Hello. How are you today?</h6>
-                        </div>
+                    </div>
+                    <ul id="chatBox">
+                        <li v-for="(msg, index) in messages" :key="index">
+                            <h4 class="userName"><strong>{{ msg.author }}</strong></h4>
+                            <h6 class="mensagem">{{ msg.msg }}</h6>
+                        </li>
+                    </ul>
 
-                        <div class="msg">
-                            <h4 class="userName"><strong>Kevin</strong></h4>
-                            <h6 class="mensagem">Hello.</h6>
-                        </div>
-
-                        <div class="mensagenssssss">
-                            <ul id="chatBox">
-                                <li v-for="(msg, index) in messages" :key="index">
-                                    <h4 class="userName"><strong>{{ msg.author }}</strong></h4>
-                                    <h6 class="mensagem">{{ msg.msg }}</h6>
-
-                                </li>
-                            </ul>
-                        </div>
-
-
-                        <div class="envioMensagem">
-                            <form @submit.prevent = "sendMessage">
-
-                                <input type="text" id="msg" name="msg" class="envioMsg" v-model:value="msg" />
-                                <button class="button send">Enviar</button>
-                            </form>
-
-
-
-                        </div>
-
-                  </div>
+                    <div class="envioMensagem">
+                        <form @submit.prevent = "sendMessage">
+                            <input type="text" id="msg" name="msg" class="envioMsg" v-model:value="msg" />
+                            <button class="button send">Enviar</button>
+                        </form>
+                    </div>
                 </div>
 
-
-
-                <div class="column" style="max-width: 70px; height: 100%; background-color: white">
+                <div class="column" style="max-width: 100px; height: 100%; background-color: white">
                     <div class="pessoaOnline">
-                        <img src="https://caocidadao.com.br/wp-content/uploads/2019/09/user.png" alt="">
-                        <h3  class="nomeConversa">Nome</h3>
+                        <h3  class="nomeConversa"> {{ msg.author }}</h3>
                     </div>
                     <div class="pessoaOnline">
                         <img src="https://caocidadao.com.br/wp-content/uploads/2019/09/user.png" alt="">
@@ -91,11 +64,8 @@
 
 <script>
 import io from 'socket.io-client';
-import app from "@/App";
 const socket = io('http://localhost:3000');
 
-//import Login from './Login.vue'
-let flag;
 export default {
     name: "Chat",
 
@@ -106,17 +76,28 @@ export default {
             users: [],
             msg: "",
             messages: [],
-
+            usuario: "",
         }
     },
     methods: {
 
         loginFlag: function(){
-          if (userName.length != 0){
+            console.log("login")
+            console.log(this.show)
+          if (this.userName.length !== 0){
+              console.log("entrou")
+              console.log(this.show)
+
               this.show = false;
-              socket.emit('user', this.userName);
-              this.userName = '';
-              return
+              console.log(this.show)
+              //let input = this.userName
+              let user = {
+                  usuario: this.userName.trim(),
+                  id: socket.id
+              }
+              console.log(user)
+              socket.emit('user', user);
+
           }
         },
 
@@ -125,6 +106,7 @@ export default {
                 author: this.userName,
                 msg: this.msg,
             }
+            console.log(message)
             socket.emit('message', message);
             this.msg = ''
         }
@@ -133,8 +115,9 @@ export default {
         socket.on('newMessage', msg=>{
             this.messages.push(msg);
         });
-        socket.on('user', userName =>{
-            this.userName.push(userName);
+        socket.on('newUser', user =>{
+            this.users.push(user);
+            console.log(this.users)
         });
     },
 
@@ -182,34 +165,14 @@ header
 .form
     line-height: 30px
     font-size: larger
-    background-color: #b3d4fc
+    background-color: #000080
     padding: 20px
     margin: 20% 30% 20% 30%
-
-#btnSubmit
-    background-color: rgb(29, 187, 162)
-    color: #fff
-    line-height: 1.2
-    text-transform: uppercase
-    display: -webkit-box
-    display: -webkit-flex
-    display: -moz-box
-    display: -ms-flexbox
-    display: flex
-    justify-content: center
-    align-items: center
-    border: none
-    width: 100%
-    height: 40px
     border-radius: 5px
-    -webkit-transition: all 0.4s
-    -o-transition: all 0.4s
-    -moz-transition: all 0.4s
-    transition: all 0.4s
+    color: white
 
 .login
     font-size: 18px
-    color: #555555
     line-height: 1.2
     display: block
     width: 100%
@@ -217,6 +180,27 @@ header
     background: transparent
     border-radius: 5px
     border: none
+    color: white
+    margin: 10px
+
+#user
+    margin: 0
+
+.loginButton
+    margin-top: 15px
+    background-color: rgb(29, 187, 162)
+    color: #fff
+    line-height: 1.2
+    text-transform: uppercase
+    display: flex
+    justify-content: center
+    align-items: center
+    border: none
+    width: 100%
+    height: 40px
+    cursor: pointer
+    border-radius: 3px
+
 
 .containerTela
     width: 100%

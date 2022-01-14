@@ -17,9 +17,10 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
 
-    socket.on('user', userName => {
-        if(usersArray.indexOf(userName) == -1 ){
-            socket.emit('user', userName);
+    socket.on('user', user => {
+        if(usersArray.indexOf(user) == -1 ){
+            console.log(user)
+            socket.emit('newUser', user);
         }else {
         }
     })

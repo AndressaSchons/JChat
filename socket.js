@@ -5,10 +5,10 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
     cors: {
-        origin: "207.246.125.67:8080",
+        origin: "*",
         methods: ["GET", "POST"]
     }
-});
+})
 
 
 let usersArray = [];

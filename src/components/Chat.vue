@@ -43,13 +43,10 @@
                     </form>
                 </div>
 
-                <div class="column" style="max-width: 100px; height: 100%; background-color: white">
-                    <div class="pessoaOnline">
-                        <h3  class="nomeConversa"> {{ msg.author }}</h3>
-                    </div>
+                <div class="column" style="max-width: 100px; height: 100%;">
                     <div class="pessoaOnline">
                         <img src="https://caocidadao.com.br/wp-content/uploads/2019/09/user.png" alt="">
-                        <h3  class="nomeConversa">Nome</h3>
+                        <h3  class="nomeConversa">Autor</h3>
                     </div>
                     <div class="pessoaOnline">
                         <img src="https://caocidadao.com.br/wp-content/uploads/2019/09/user.png" alt="">
@@ -63,7 +60,7 @@
 
 <script>
 import io from 'socket.io-client';
-const socket = io('207.246.125.67:3000');
+const socket = io('http://localhost:3000');
 
 export default {
     name: "Chat",
@@ -81,22 +78,14 @@ export default {
     methods: {
 
         loginFlag: function(){
-            console.log("login")
-            console.log(this.show)
-          if (this.userName.length !== 0){
-              console.log("entrou")
-              console.log(this.show)
-
-              this.show = false;
-              console.log(this.show)
-              //let input = this.userName
-              let user = {
-                  usuario: this.userName.trim(),
-                  id: socket.id
-              }
-              console.log(user)
-              socket.emit('user', user);
-
+            if (this.userName.length !== 0){
+                this.show = false;
+                //let input = this.userName
+                let user = {
+                    usuario: this.userName.trim(),
+                    id: socket.id
+                }
+                socket.emit('user', user);
           }
         },
 
@@ -105,7 +94,6 @@ export default {
                 author: this.userName,
                 msg: this.msg,
             }
-            console.log(message)
             socket.emit('message', message);
             this.msg = ''
         }
@@ -115,7 +103,7 @@ export default {
             this.messages.push(msg);
         });
         socket.on('newUser', user =>{
-            this.users.push(user);
+            //this.users.push(user);
             console.log(this.users)
         });
     },
@@ -128,6 +116,7 @@ export default {
                 messageBox.scrollTop = messageBox.scrollHeight;
             })
         })
+
 
     },
     components:{
@@ -213,7 +202,6 @@ header
         border-radius: 10px
 
 .containerChat
-    background-color: pink
     position: relative
     margin: 0
 
@@ -231,13 +219,8 @@ header
     color: white
     text-align: left
 
-.chat
-    background-color: pink
-    margin-top: 9px
-
 .envioMensagem
     width: 100%
-    background-color: black
     position: absolute
     bottom: 0
     margin: 0
@@ -271,12 +254,11 @@ header
 
 .pessoaOnline
     color: white
-    background-color: white
     padding: 10px
     display: block
-
-.pessoaOnline
     img
+        width: 25px
+        display: inline-block
         border: 3px solid green
         border-radius: 30px
 

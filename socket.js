@@ -21,7 +21,12 @@ io.on('connection', (socket) => {
         if(usersArray.indexOf(user) == -1 ){
             console.log(user)
             socket.emit('newUser', user);
-        }else {
+            console.log(usersArray)
+            socket.emit('userArray', usersArray);
+            console.log(usersArray)
+
+        } else {
+            console.log("Error");
         }
     })
 

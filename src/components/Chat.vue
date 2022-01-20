@@ -60,7 +60,7 @@
 
 <script>
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000');
+const socket = io('http://207.246.125.67');
 
 export default {
     name: "Chat",
@@ -103,7 +103,7 @@ export default {
             this.messages.push(msg);
         });
         socket.on('newUser', user =>{
-            //this.users.push(user);
+            //tihis.users.push(user);
             console.log(this.users)
         });
     },
